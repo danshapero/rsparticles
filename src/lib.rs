@@ -10,7 +10,7 @@ pub fn collision_time(particle1: Particle, particle2: Particle, radius: f64) -> 
     let dx = particle1.position - particle2.position;
     let dv = particle1.velocity - particle2.velocity;
     let dx_dv = dx.dot(&dv);
-    let dx2 = dx.dot(&dv);
+    let dx2 = dx.dot(&dx);
     let dv2 = dv.dot(&dv);
     let discriminant = dx_dv * dx_dv - dv2 * (dx2 - 4.0 * radius * radius);
     if discriminant < 0.0 {
@@ -41,8 +41,8 @@ mod tests {
     fn no_collision() {
         let radius = 1.0;
         let epsilon = 0.1;
-        let x1 = Vector2::new(-10.0, -2.0 * radius - epsilon);
-        let x2 = Vector2::new(10.0, 2.0 * radius + epsilon);
+        let x1 = Vector2::new(-10.0, -radius - epsilon);
+        let x2 = Vector2::new(10.0, radius + epsilon);
         let v1 = Vector2::new(1.0, 0.0);
         let v2 = Vector2::new(-1.0, 0.0);
         let particle1 = Particle{position: x1, velocity: v1};
